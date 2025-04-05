@@ -1,0 +1,11 @@
+id,name,type,priority,expiry_date,volume,weight
+item001,Oxygen Tank,life_support,1,2025-06-30,10,5
+item002,Water Pack,consumable,2,2025-05-20,8,4
+item003,Tool Kit,hardware,3,2030-01-01,5,3
+item004,Medical Kit,medical,1,2025-04-25,6,2
+item005,Food Ration,consumable,2,2025-04-10,9,4
+item006,Data Drive,equipment,4,2027-11-15,2,1
+item007,Repair Module,hardware,3,2026-02-10,12,6
+item008,Backup Battery,equipment,2,2026-12-01,7,3
+item009,CO2 Filter,life_support,1,2025-07-15,4,2
+item010,Space Suit,gear,1,2030-12-31,15,10

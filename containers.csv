@@ -1,0 +1,6 @@
+id,name,location,max_volume,current_volume
+contA,Main Storage A,Zone-1,100,0
+contB,Auxiliary Bay B,Zone-2,80,0
+contC,Medical Locker C,Zone-1,40,0
+contD,Tool Compartment D,Zone-3,60,0
+contE,Emergency Dock E,Zone-2,50,0
