@@ -1,0 +1,23 @@
+├ main.py                       # ✅ FastAPI backend entry point
+├ Dockerfile                   # ✅ Containerization
+├ .gitignore                   # ✅ Ignoring unwanted files
+├ items.csv                    # ✅ Sample item data
+├ containers.csv               # ✅ Sample container data
+├ node_modules/                # ✅ Node dependencies (auto-generated)
+├ project-frontend/            # ✅ Next.js frontend project
+│  ├ package.json              # ✅ Project config and dependencies
+│  ├ next.config.js            # ✅ Next.js settings
+│  ├ tailwind.config.js        # ✅ Tailwind config
+│  ├ postcss.config.js         # ✅ Tailwind + PostCSS
+│  ├ pages/                    # ✅ Main app pages
+│  │  ├ _app.js                # ✅ Global styles and layout wrap
+│  │  ├ index.js               # ✅ Dashboard / Home
+│  │  ├ import.js              # ✅ CSV importer
+│  │  ├ placement.js           # ✅ Placement optimizer
+│  │  ├ search.js              # ✅ Search/retrieval
+│  │  ├ simulate.js            # ✅ Time simulation
+│  │  ├ Layout.js              # ✅ Shared layout
+│  │  ├ waste.js               # ✅ Waste management
+│  │  └ logs.js                # ✅ Logs viewer
+│  └ styles/
+│     └ globals.css            # ✅ Global Tailwind styles
