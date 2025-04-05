@@ -1,0 +1,24 @@
+{
+    "name": "project-frontend",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "next dev -p 3000",
+        "build": "next build",
+        "start": "next start -p 3000"
+    },
+    "dependencies": {
+        "next": "latest",
+        "react": "latest",
+        "react-dom": "latest",
+        "tailwindcss": "^3.4.1"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.21",
+        "postcss": "^8.5.3"
+    },
+    "description": "",
+    "main": "next.config.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

@@ -1,0 +1,60 @@
+import { useState } from 'react'
+
+export default function SearchPage() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [itemId, setItemId] = useState('')
+  const [result, setResult] = useState(null)
+
+  const searchItem = async () => {
+    const query = new URLSearchParams()
+    if (itemId) query.append('itemId', itemId)
+    if (searchTerm) query.append('itemName', searchTerm)
+    const res = await fetch(`http://localhost:8000/api/search?${query.toString()}`)
+    const data = await res.json()
+    setResult(data)
+  }
+
+  const retrieveItem = async (itemId) => {
+    const payload = {
+      itemId,
+      userId: "astronaut_1",
+      timestamp: new Date().toISOString()
+    }
+    const res = await fetch('http://localhost:8000/api/retrieve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    const data = await res.json()
+    alert(`Retrieve response: ${JSON.stringify(data)}`)
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-xl font-bold">Search & Retrieve Item</h1>
+      <input 
+        type="text" 
+        placeholder="Item ID or Name" 
+        value={itemId || searchTerm} 
+        onChange={(e) => {
+          setItemId(e.target.value)
+          setSearchTerm(e.target.value)
+        }}
+        className="border p-2 w-full my-2"
+      />
+      <button onClick={searchItem} className="px-4 py-2 bg-blue-500 text-white">Search</button>
+      {result && 
+        <div className="mt-4 p-4 border">
+          <pre>{JSON.stringify(result, null, 2)}</pre>
+          {result.item && (
+            <button 
+              onClick={() => retrieveItem(result.item.itemId)}
+              className="mt-2 px-4 py-2 bg-green-500 text-white">
+              Retrieve Item
+            </button>
+          )}
+        </div>
+      }
+    </div>
+  )
+}
