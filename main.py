@@ -233,13 +233,14 @@ def waste_return_plan():
     undocking_container_id = data.get("undockingContainerId")
     undocking_date = data.get("undockingDate")
     max_weight = data.get("maxWeight")
-    
+
     plan, retrieval_steps, manifest = dummy_return_plan(undocking_container_id, undocking_date, max_weight)
+
     return jsonify({
         "success": True,
-        "returnPlan": plan,
+        "plan": plan,
         "retrievalSteps": retrieval_steps,
-        "returnManifest": manifest
+        "manifest": manifest
     })
 
 @app.route("/api/waste/complete-undocking", methods=["POST"])
@@ -270,58 +271,67 @@ def simulate_day():
     return jsonify({"success": True, "newDate": new_date, "changes": changes})
 
 # 5. Import/Export APIs
+
+# API: Import Items from CSV
 @app.route("/api/import/items", methods=["POST"])
 def import_items():
     if "file" not in request.files:
         return jsonify({"success": False, "itemsImported": 0, "errors": [{"row": 0, "message": "No file provided"}]})
+
     file = request.files["file"]
-    errors = []
-    count = 0
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     reader = csv.DictReader(stream)
+
+    imported = 0
+    errors = []
+
     for idx, row in enumerate(reader, start=1):
         try:
-            item = {
-                "itemId": row["Item ID"],
-                "name": row["Name"],
-                "width": float(row["Width"]),
-                "depth": float(row["Depth"]),
-                "height": float(row["Height"]),
-                "mass": float(row.get("Mass", 0)),
-                "priority": int(row.get("Priority", 0)),
-                "expiryDate": row["Expiry Date"],
-                "usageLimit": int(row.get("Usage Limit", 0)),
-                "preferredZone": row["Preferred Zone"]
+            item_id = row["itemId"]
+            ITEMS[item_id] = {
+                "itemId": item_id,
+                "name": row["name"],
+                "width": float(row["width"]),
+                "depth": float(row["depth"]),
+                "height": float(row["height"]),
+                "expiryDate": row["expiryDate"],
+                "usageLimit": int(row.get("usageLimit", 0))
             }
-            ITEMS[item["itemId"]] = item
-            count += 1
+            imported += 1
         except Exception as e:
             errors.append({"row": idx, "message": str(e)})
-    return jsonify({"success": True, "itemsImported": count, "errors": errors})
 
+    return jsonify({"success": True, "itemsImported": imported, "errors": errors})
+
+# API: Import Containers from CSV
 @app.route("/api/import/containers", methods=["POST"])
 def import_containers():
     if "file" not in request.files:
         return jsonify({"success": False, "containersImported": 0, "errors": [{"row": 0, "message": "No file provided"}]})
+
     file = request.files["file"]
-    errors = []
-    count = 0
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     reader = csv.DictReader(stream)
+
+    imported = 0
+    errors = []
+
     for idx, row in enumerate(reader, start=1):
         try:
-            container = {
-                "containerId": row["Container ID"],
-                "zone": row["Zone"],
-                "width": float(row["Width"]),
-                "depth": float(row["Depth"]),
-                "height": float(row["Height"])
+            container_id = row["containerId"]
+            CONTAINERS[container_id] = {
+                "containerId": container_id,
+                "name": row["name"],
+                "width": float(row["width"]),
+                "depth": float(row["depth"]),
+                "height": float(row["height"]),
+                "location": row["location"]
             }
-            CONTAINERS[container["containerId"]] = container
-            count += 1
+            imported += 1
         except Exception as e:
             errors.append({"row": idx, "message": str(e)})
-    return jsonify({"success": True, "containersImported": count, "errors": errors})
+
+    return jsonify({"success": True, "containersImported": imported, "errors": errors})
 
 @app.route("/api/export/arrangement", methods=["GET"])
 def export_arrangement():
