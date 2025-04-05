@@ -2,10 +2,7 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/import": "pages/import.js",
-  "/simulate": "pages/simulate.js",
   "/placement": "pages/placement.js",
-  "/logs": "pages/logs.js",
-  "/waste": "pages/waste.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/import": "pages/import.js"
 }
